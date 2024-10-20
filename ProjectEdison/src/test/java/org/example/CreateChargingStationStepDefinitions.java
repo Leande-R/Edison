@@ -35,6 +35,7 @@ public class CreateChargingStationStepDefinitions {
 
     @And("i set the price for DC charging to {double} per kWh")
     public void iSetThePriceForDCChargingToPerKWh(double priceDC) {
+
         chargingStation.setPriceDC(priceDC);
     }
 

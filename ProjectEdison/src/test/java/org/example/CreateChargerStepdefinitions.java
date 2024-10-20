@@ -18,6 +18,12 @@ public class CreateChargerStepdefinitions {
         return ChargingMethod.valueOf(method);
     }
 
+    @Given("I created a new charging station in Fürstenfeld")
+    public void iCreatedANewChargingStationInFürstenfeld() {
+        chargingStation = new ChargingStation("Einsteingasse 1, 8280", "Fürstenfeld Charging", 0.25, 0.35);
+    }
+
+
     @Given("I want to create a new charger")
     public void iWantToCreateANewCharger() {
         charger = new Charger( 0, null, null, null);
@@ -27,7 +33,6 @@ public class CreateChargerStepdefinitions {
 
     @When("I assign the charger to the charging station {string}")
     public void iAssignTheChargerToTheChargingStation(String location) {
-        chargingStation = new ChargingStation(location, null,  0, 0);
         charger.setChargingStation(chargingStation);
     }
 
