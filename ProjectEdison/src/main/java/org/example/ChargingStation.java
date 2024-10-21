@@ -13,6 +13,7 @@ public class ChargingStation {
         this.location = location;
         this.priceAC = priceAC;
         this.priceDC = priceDC;
+        NetworkList.getInstance().addChargingStation(this);
     }
 
 
