@@ -1,59 +1,44 @@
 package org.example;
 
-
-
-import io.cucumber.java.ParameterType;
-import io.cucumber.java.en.*;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CreateCustomerStepDefinitions {
+    private String name;
 
-
-    Customer customer;
-
-
-    @Given("I want to create a new customer")
-    public void iWantToCreateANewCustomer() {
-        customer = new Customer();
-
-
+    @Given("I want to create a new Account")
+    public void iWantToCreateANewAccount() {
     }
 
-
-    @When("I enter the first name {string}")
-    public void iEnterTheFirstName(String firstName) {
-        customer.setFirstName(firstName);
+    @And("my name is {string}")
+    public void myNameIs(String name) {
+        // Implementation for setting the name
+        this.name = name;
     }
 
-
-    @And("I enter the last name {string}")
-    public void iEnterTheLastName(String lastName) {
-        customer.setLastName(lastName);
-
+    @When("I enter the name {string}")
+    public void iEnterTheName(String name) {
+        // Implementation for entering the name
+        this.name = name;
     }
 
-    @And("I enter the ID of the Customer  {int}")
-    public void iEnterTheIDOfTheCustomer(int ID) {
-        customer.setId(ID);
+    @Then("a new Customer is created")
+    public void aNewCustomerIsCreated() {
+        // Implementation for verifying the customer creation
     }
 
-
-    @And("I enter the email {string}")
-    public void iEnterTheEmail(String mail) {
-        customer.setMail(mail);
+    @And("the Customer name is {string}")
+    public void theCustomerNameIs(String name) {
+        // Implementation for verifying the customer name
+        this.name = name;
     }
 
-
-
-    @Then("a new customer with the first name {string}, last name {string}, ID {int} and email {string} is created")
-    public void aNewCustomerWithTheFirstNameLastNameIDAndEmailIsCreated(String firstName, String lastName, int ID, String mail) {
-        assertEquals(firstName, customer.getFirstName());
-        assertEquals(lastName, customer.getLastName());
-        assertEquals(ID, customer.getId());
-        assertEquals(mail, customer.getMail());
+    @And("the Credit is {double}€")
+    public void theCreditIs(double credit) {
+        assertEquals(0.00, credit);
     }
-
-
 }

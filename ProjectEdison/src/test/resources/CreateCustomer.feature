@@ -8,4 +8,4 @@ Background:
     When I enter the name "John Doe"
     Then a new Customer is created
     And the Customer name is "John Doe"
-    And the Credit is "0.00"€
+    And the Credit is 0.00€
