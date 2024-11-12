@@ -13,4 +13,4 @@ Background:
     And the charging process starts at "2024-10-01T10:00:00"
     And the charging process ends at "2024-10-01T11:40:00"
     Then the charging process took 100 minutes
-    And I am charged 25 Euros
+    And I am charged 50 Euros

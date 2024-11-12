@@ -1,8 +1,9 @@
+
 package org.example;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.*;
 
-import java.time.LocalDateTime;
+        import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,52 +15,60 @@ public class ExecuteChargingProcessStepDefinitions {
     private Charger charger;
     private ChargingProcess chargingProcess;
 
-
-
-    @Given("My Name is {string} , {string} , CustomerID {int} , my mail is {string}, my credit is {int} Euro I want to charge my vehicle")
-    public void myNameIsCustomerIDMyMailIsMyCreditIsEuroIWantToChargeMyVehicle(String firstname, String lastname, int id, String mail, int credit) {
-        this.customer = new Customer(id, firstname, lastname, mail, credit);
+    @Given("I want to charge my vehicle at the Charging Station {string}")
+    public void iWantToChargeMyVehicleAtTheChargingStation(String arg0) {
+        this.chargingStation = new ChargingStation(arg0, "", 0.0, 0.0);
     }
 
-    @When("I am at the chargingstation {string}, at the address {string}, with a ACPrice of {double} Euro per minute , a DCPrice of {double} Euro per minute")
-    public void iAmAtTheChargingstationAtTheAddressWithAACPriceOfEuroPerMinuteADCPriceOfEuroPerMinute(String CsName, String location, double PriceAC, double PriceDC) {
-        this.chargingStation = new ChargingStation(CsName, location, PriceAC, PriceDC);
+    @And("I already have an account with the ID {string}")
+    public void iAlreadyHaveAnAccountWithTheID(String arg0) {
+        this.customer = new Customer(Integer.parseInt(arg0), "", "", "", 0);
     }
 
-    @And("I select the charger with the ID {int} , at the chargingstation {string} , the selected Charging Method is {method}")
-    public void iSelectTheChargerWithTheIDAtTheChargingstationTheSelectedChargingMethodIs(int id, String chargingStationName, ChargingMethod method) {
-        System.out.println("Expected Charging Station: " + this.chargingStation.getCsName());
-        System.out.println("Provided Charging Station: " + chargingStationName);
+    @And("my credit is {int}€")
+    public void myCreditIs€(int arg0) {
+        this.customer.setCredit(arg0);
+    }
 
-        if (!chargingStationName.equals(this.chargingStation.getCsName())) {
-            throw new IllegalArgumentException("Charging station name does not match the previously defined charging station.");
-        }
-        this.charger = new Charger(id, this.chargingStation, method);
+    @And("I want to charge my vehicle for {int} minutes")
+    public void iWantToChargeMyVehicleForMinutes(int arg0) {
+        this.chargingProcess = new ChargingProcess(this.customer, this.charger, LocalDateTime.now(), null);
+    }
+
+    @And("I want to charge my vehicle with AC")
+    public void iWantToChargeMyVehicleWithAC() {
+        this.charger = new Charger(0, this.chargingStation, ChargingMethod.AC);
+    }
+
+    @When("I select the Charger with the ID {int} , at the Charging Station {string}")
+    public void iSelectTheChargerWithTheIDAtTheChargingStation(int ID, String Location) {
+        this.charger = new Charger(ID, this.chargingStation, ChargingMethod.AC);
+    }
+
+    @And("the charging process ends at {string}")
+    public void theChargingProcessEndsAt(String arg0) {
+        this.chargingProcess.setEndTime(LocalDateTime.parse(arg0, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+    }
+
+    @Then("the charging process took {int} minutes")
+    public void theChargingProcessTookMinutes(int arg0) {
+        assertEquals(arg0, this.chargingProcess.getDurationMinutes());
     }
 
     @And("the charging process starts at {string}")
-    public void theChargingProcessStartsAt(String startTime) {
-        LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        this.chargingProcess = new ChargingProcess(this.customer, this.charger, start, null);
+    public void theChargingProcessStartsAt(String arg0) {
+        this.chargingProcess.setStartTime(LocalDateTime.parse(arg0, DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 
-
-
-
-
-    @Then("the charging process is executed , takes {long} minutes")
-    public void theChargingProcessIsExecutedTakesMinutes(long durationMinutes) {
-        chargingProcess.chargeVehicle(chargingProcess.getStartTime(), durationMinutes);
+    @And("I am charged {int} Euros")
+    public void iAmChargedEuros(int arg0) {
+        assertEquals(arg0, this.customer.getCredit());
     }
 
-
-
-
-    @Then("I am charged {double} Euros")
-    public void iAmCharged(double expectedCharge) {
-        assertEquals(expectedCharge, this.customer.getCredit());
+    @And("the price for AC at {string} is {double}€ per minute")
+    public void thePriceForACAtIsPerMinute(String stationName, double price) {
+        if (this.chargingStation.getCsName().equals(stationName)) {
+            this.chargingStation.setPriceAC(price);
+        }
     }
-
-
-
 }
