@@ -5,8 +5,7 @@ public class ChargingStation {
     private String CsName;
     private double priceAC;
     private double priceDC;
-    private final  double standingFee = 0.5;
-
+    private double standingFee = 0.5;
 
 
     public ChargingStation(String CsName, String location, double priceAC, double priceDC) {
@@ -17,7 +16,6 @@ public class ChargingStation {
         NetworkList.getInstance().addChargingStation(this);
 
     }
-
 
 
     //GETTER AND SETTER
@@ -56,4 +54,11 @@ public class ChargingStation {
         this.priceDC = priceDC;
     }
 
+    public void setStandingFee(double StandingFee) {
+        this.standingFee = StandingFee;
+    }
+
+    public double getStandingFee() {
+        return standingFee;
+    }
 }
