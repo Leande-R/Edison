@@ -6,47 +6,51 @@ import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CreateChargingStationStepDefinitions {
-
-    private ChargingStation chargingStation;
-
-    @Given("i want to create a new Charging Station in the System")
+    @Given("I want to create a new Charging Station in the System")
     public void iWantToCreateANewChargingStationInTheSystem() {
-        chargingStation = new ChargingStation(null, null, 0, 0);
+        // Implementation here
     }
 
-    @When("i enter {string} into the Location field")
-    public void iEnterIntoTheLocationField(String location) {
-        chargingStation.setLocation(location);
+    @And("the address of the Charging Station is {string}")
+    public void theAddressOfTheChargingStationIs(String address) {
+        // Implementation here
+        ChargingStation chargingStation = new ChargingStation("", address, 0.0, 0.0);
     }
 
-
-
-
-    @And("i enter the name {string} into the name field")
-    public void iEnterTheNameIntoTheNameField(String name) {
-       chargingStation.setCsName(name);
+    @When("I enter {string} into the Location field")
+    public void iEnterIntoTheLocationField(String arg0) {
+        ChargingStation chargingStation = new ChargingStation("", arg0, 0.0, 0.0);
     }
 
-    @And("i set the price for AC charging to {double} per kWh")
-    public void iSetThePriceForACChargingToPerKWh(double priceAC) {
-        chargingStation.setPriceAC(priceAC);
-
+    @And("I enter the name {string} into the name field")
+    public void iEnterTheNameIntoTheNameField(String arg0) {
+        ChargingStation chargingStation = new ChargingStation(arg0, "", 0.0, 0.0);
     }
 
-    @And("i set the price for DC charging to {double} per kWh")
-    public void iSetThePriceForDCChargingToPerKWh(double priceDC) {
-
-        chargingStation.setPriceDC(priceDC);
+    @And("I set the price for {string} charging to {string}€ per minute")
+    public void iSetThePriceForChargingTo€PerMinute(String arg0, String arg1) {
+        ChargingStation chargingStation = new ChargingStation("", "", Double.parseDouble(arg1), 0.0);
     }
 
+    @Then("I have successfully created a new Charging Station in {string} with the name {string}")
+    public void iHaveSuccessfullyCreatedANewChargingStationInWithTheName(String arg0, String arg1) {
+        ChargingStation chargingStation = new ChargingStation(arg1, arg0, 0.0, 0.0);
+    }
 
+    @And("I have successfully created a new price list for the Charging Station {string}")
+    public void iHaveSuccessfullyCreatedANewPriceListForTheChargingStation(String arg0) {
+        ChargingStation chargingStation = new ChargingStation("", arg0, 0.0, 0.0);
+    }
 
-    @Then("i have successfully created a new Charging Station in {string} with the name {string} and the AC-price  {double} and the DC-Price {double}")
-    public void iHaveSuccessfullyCreatedANewChargingStationInWithTheNameAndTheACPriceAndTheDCPrice(String location, String name,  double priceAC, double priceDC) {
-        assertEquals(location, chargingStation.getLocation());
-        assertEquals(name, chargingStation.getCsName());
-        assertEquals(priceAC, chargingStation.getPriceAC());
-        assertEquals(priceDC, chargingStation.getPriceDC());
+    @And("I have set the price for {string} to {string}€ per minute")
+    public void iHaveSetThePriceForTo€PerMinute(String arg0, String arg1) {
+
+        ChargingStation chargingStation = new ChargingStation("", "", 0.0, 0.0);
+        if (arg0.equals("AC")) {
+            chargingStation.setPriceAC(Double.parseDouble(arg1));
+        } else if (arg0.equals("DC")) {
+            chargingStation.setPriceDC(Double.parseDouble(arg1));
+        }
 
     }
 }
