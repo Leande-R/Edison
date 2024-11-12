@@ -3,25 +3,22 @@ package org.example;
 public class Customer {
 
     private int id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String mail;
     private double credit;
 
     public Customer() {
     }
-    public Customer(int id, String firstName, String lastName, String mail) {
+    public Customer(int id, String name, String mail) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.mail = mail;
     }
 
 
-    public Customer(int id, String firstName, String lastName, String mail, double credit) {
+    public Customer(int id, String name, String mail, double credit) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.mail = mail;
         this.credit = credit;
     }
@@ -34,21 +31,15 @@ public class Customer {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String firstName) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public String getMail() {
         return mail;
@@ -66,20 +57,11 @@ public class Customer {
         this.credit = credit;
     }
 
-    public void topUpCredit(int amount) {
+    public void topUpCredit(double amount) {
         this.credit += amount;
     }
 
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", mail='" + mail + '\'' +
-                ", credit=" + credit +
-                '}';
-    }
+
 }
 

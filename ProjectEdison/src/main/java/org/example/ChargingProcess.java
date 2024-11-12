@@ -6,6 +6,7 @@ public class ChargingProcess {
 
     private int CpId;
     private Customer customer;
+    private ChargingStation chargingStation;
     private Charger charger;
     private LocalDateTime startTime = LocalDateTime.now();
     private LocalDateTime endTime;
@@ -50,7 +51,7 @@ public class ChargingProcess {
     }
 
     public void setCustomer(Customer customer) {
-        this.customer = new Customer(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getMail(), customer.getCredit());
+        this.customer = new Customer(customer.getId(), customer.getName(), customer.getMail(), customer.getCredit());
     }
 
 
@@ -96,6 +97,8 @@ public class ChargingProcess {
         customer.setCredit(customer.getCredit() - totalPrice);
     }
 
+
+
     public void chargeVehicle(LocalDateTime startTime, long durationMinutes) {
         ChargingStation station = charger.getChargingStation();
         double pricePerMinute;
@@ -126,16 +129,31 @@ public class ChargingProcess {
         } else {
             throw new IllegalArgumentException("Unknown charging method: " + charger.getChargingMethod());
         }
+        charger.setChargingStatus(ChargingStatus.OCCUPIED);
 
         long durationMinutes = Duration.between(startTime, endTime).toMinutes();
 
+
+        customer.setCredit(customer.getCredit() - durationMinutes * pricePerMinute);
+
+        charger.setChargingStatus(ChargingStatus.IN_OPERATION_FREE);
+
         return durationMinutes * pricePerMinute;
+
+
+
     }
 
 
+    public ChargingStation getChargingStation() {
+        return chargingStation;
+    }
 
+    public void setChargingStation(ChargingStation chargingStation) {
+        this.chargingStation = chargingStation;
+    }
 
-    private void generateInvoice(double totalPrice) {
+    private void generateInvoice(double totalPrice, ChargingProcess chargingProcess) {
         Invoice invoice = new Invoice(totalPrice, this);
         invoice.printInvoice();
     }

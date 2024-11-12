@@ -16,10 +16,11 @@ public class ChargingStation {
         NetworkList.getInstance().addChargingStation(this);
 
     }
+    public ChargingStation() {
+    }
 
 
     //GETTER AND SETTER
-
 
     public String getLocation() {
         return location;

@@ -1,8 +1,8 @@
 Feature: Create a new customer
 
-Background:
-  Given I want to create a new Account
-  And my name is "John Doe"
+  Background:
+    Given I want to create a new Account
+    And my name is "John Doe"
 
   Scenario: Successfully creating a new customer
     When I enter the name "John Doe"
