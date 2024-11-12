@@ -139,6 +139,14 @@ public class ChargingProcess {
         Invoice invoice = new Invoice(totalPrice, this);
         invoice.printInvoice();
     }
+
+    public int getDurationMinutes() {
+        return (int) Duration.between(startTime, endTime).toMinutes();
+    }
+
+    public void setStartTime(LocalDateTime parse) {
+        this.startTime = parse;
+    }
 }
 
 

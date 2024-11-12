@@ -20,8 +20,6 @@ public class ChargingStation {
 
 
 
-
-
     //GETTER AND SETTER
 
 
