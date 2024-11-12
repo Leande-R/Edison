@@ -2,7 +2,6 @@ Feature: Check Charging Station Prices
 
 Background:
   Given The Charging Stations "WienCharging", "GrazCharging" and "LinzCharging" are already created
-  And each of them has it's own pricelist
   And the Standing Fee is "0.50"€ per minute on every Charging Station
   And the Price for "AC" at "WienCharging" is "0.25"€ per KwH
   And the Price for "DC" at "WienCharging" is "0.40"€ per KwH
@@ -13,7 +12,7 @@ Background:
 
 
   Scenario: Successfully checking the prices of the existing charging station
-    When I open the Pricelists of the 3 Stations to compare them
+    When I open the Pricelists of the three Stations to compare them
     Then I see that the Standing Fee on all Charging Stations is "0.50"€ per minute
     And I see that the Price for "AC" at "WienCharging" is "0.25"€ per KwH
     And I see that the Price for "DC" at "WienCharging" is "0.40"€ per KwH
