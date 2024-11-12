@@ -60,4 +60,7 @@ public class CreateChargerStepdefinitions {
         assertEquals(id, charger.getID());
         assertEquals(chargingstation, charger.getChargingStation().getLocation());
     }
+
+
+
 }

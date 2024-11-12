@@ -59,4 +59,7 @@ public class ExecuteChargingProcessStepDefinitions {
     public void iAmCharged(double expectedCharge) {
         assertEquals(expectedCharge, this.customer.getCredit());
     }
+
+
+
 }

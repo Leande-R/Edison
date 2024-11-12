@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class ChargingProcessMonitoringStepDefinitions {
+public class  ChargingProcessMonitoringStepDefinitions {
 
     private Invoice invoice;
     private ChargingProcess chargingProcess;

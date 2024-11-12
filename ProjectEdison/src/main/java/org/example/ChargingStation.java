@@ -5,6 +5,7 @@ public class ChargingStation {
     private String CsName;
     private double priceAC;
     private double priceDC;
+    private final  double standingFee = 0.5;
 
 
 
@@ -14,6 +15,7 @@ public class ChargingStation {
         this.priceAC = priceAC;
         this.priceDC = priceDC;
         NetworkList.getInstance().addChargingStation(this);
+
     }
 
 
