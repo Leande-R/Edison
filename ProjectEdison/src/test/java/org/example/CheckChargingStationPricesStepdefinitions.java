@@ -15,10 +15,6 @@ public class CheckChargingStationPricesStepdefinitions {
         ChargingStation chargingStation3 = new ChargingStation(arg2, "", 0.0, 0.0);
     }
 
-    @And("each of them has it's own pricelist")
-    public void eachOfThemHasItSOwnPricelist() {
-    }
-
     @And("the Standing Fee is {string}€ per minute on every Charging Station")
     public void theStandingFeeIs€PerMinuteOnEveryChargingStation(String arg0) {
         for (ChargingStation station : NetworkList.getInstance().getChargingStations()) {
@@ -39,7 +35,7 @@ public class CheckChargingStationPricesStepdefinitions {
         }
     }
 
-    @When("I open the Pricelists of the {int} Stations to compare them")
+    @When("I open the Pricelists of the three Stations to compare them")
     public void iOpenThePricelistsOfTheStationsToCompareThem(int arg0) {
         this.theChargingStationsAndAreAlreadyCreated("Station1", "Station2", "Station3");
     }
