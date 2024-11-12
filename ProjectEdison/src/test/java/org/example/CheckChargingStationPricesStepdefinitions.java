@@ -8,53 +8,61 @@ import io.cucumber.java.en.When;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CheckChargingStationPricesStepdefinitions {
+
     @Given("The Charging Stations {string}, {string} and {string} are already created")
-    public void theChargingStationsAndAreAlreadyCreated(String arg0, String arg1, String arg2) {
-        ChargingStation chargingStation1 = new ChargingStation(arg0, "", 0.0, 0.0);
-        ChargingStation chargingStation2 = new ChargingStation(arg1, "", 0.0, 0.0);
-        ChargingStation chargingStation3 = new ChargingStation(arg2, "", 0.0, 0.0);
+    public void theChargingStationsAndAreAlreadyCreated(String station1Name, String station2Name, String station3Name) {
+        ChargingStation chargingStation1 = new ChargingStation(station1Name, "", 0.0, 0.0);
+        ChargingStation chargingStation2 = new ChargingStation(station2Name, "", 0.0, 0.0);
+        ChargingStation chargingStation3 = new ChargingStation(station3Name, "", 0.0, 0.0);
+
+        NetworkList networkList = NetworkList.getInstance();
+        networkList.addChargingStation(chargingStation1);
+        networkList.addChargingStation(chargingStation2);
+        networkList.addChargingStation(chargingStation3);
     }
 
     @And("the Standing Fee is {string}€ per minute on every Charging Station")
-    public void theStandingFeeIs€PerMinuteOnEveryChargingStation(String arg0) {
+    public void theStandingFeeIs€PerMinuteOnEveryChargingStation(String standingFee) {
         for (ChargingStation station : NetworkList.getInstance().getChargingStations()) {
-            station.setStandingFee(Double.parseDouble(arg0));
+            station.setStandingFee(Double.parseDouble(standingFee));
         }
     }
 
     @And("the Price for {string} at {string} is {string}€ per KwH")
-    public void thePriceForAtIs€PerKwH(String arg0, String arg1, String arg2) {
+    public void thePriceForAtIs€PerKwH(String priceType, String stationName, String price) {
         for (ChargingStation station : NetworkList.getInstance().getChargingStations()) {
-            if (station.getCsName().equals(arg1)) {
-                if (arg0.equals("AC")) {
-                    station.setPriceAC(Double.parseDouble(arg2));
-                } else if (arg0.equals("DC")) {
-                    station.setPriceDC(Double.parseDouble(arg2));
+            if (station.getCsName().equals(stationName)) {
+                if (priceType.equals("AC")) {
+                    station.setPriceAC(Double.parseDouble(price));
+                } else if (priceType.equals("DC")) {
+                    station.setPriceDC(Double.parseDouble(price));
                 }
             }
         }
     }
 
     @When("I open the Pricelists of the three Stations to compare them")
-    public void iOpenThePricelistsOfTheStationsToCompareThem(int arg0) {
-        this.theChargingStationsAndAreAlreadyCreated("Station1", "Station2", "Station3");
+    public void iOpenThePricelistsOfTheStationsToCompareThem() {
     }
 
     @Then("I see that the Standing Fee on all Charging Stations is {string}€ per minute")
-    public void iSeeThatTheStandingFeeOnAllChargingStationsIs€PerMinute(String arg0) {
+    public void iSeeThatTheStandingFeeOnAllChargingStationsIs€PerMinute(String standingFee) {
         for (ChargingStation station : NetworkList.getInstance().getChargingStations()) {
-            assertEquals(Double.parseDouble(arg0), station.getStandingFee());
+            assertEquals(Double.parseDouble(standingFee), station.getStandingFee(),
+                    "Standing fee mismatch for station " + station.getCsName());
         }
     }
 
     @And("I see that the Price for {string} at {string} is {string}€ per KwH")
-    public void iSeeThatThePriceForAtIs€PerKwH(String arg0, String arg1, String arg2) {
+    public void iSeeThatThePriceForAtIs€PerKwH(String priceType, String stationName, String price) {
         for (ChargingStation station : NetworkList.getInstance().getChargingStations()) {
-            if (station.getCsName().equals(arg1)) {
-                if (arg0.equals("AC")) {
-                    assertEquals(Double.parseDouble(arg2), station.getPriceAC());
-                } else if (arg0.equals("DC")) {
-                    assertEquals(Double.parseDouble(arg2), station.getPriceDC());
+            if (station.getCsName().equals(stationName)) {
+                if (priceType.equals("AC")) {
+                    assertEquals(Double.parseDouble(price), station.getPriceAC(),
+                            "AC price mismatch for " + stationName);
+                } else if (priceType.equals("DC")) {
+                    assertEquals(Double.parseDouble(price), station.getPriceDC(),
+                            "DC price mismatch for " + stationName);
                 }
             }
         }
