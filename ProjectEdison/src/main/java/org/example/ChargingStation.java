@@ -61,4 +61,10 @@ public class ChargingStation {
     public double getStandingFee() {
         return standingFee;
     }
+
+    public void settime(String arg0) {
+    }
+
+    public void endtime(String arg0) {
+    }
 }
