@@ -22,7 +22,7 @@ public class ExecuteChargingProcessStepDefinitions {
 
     @And("I already have an account with the ID {string}")
     public void iAlreadyHaveAnAccountWithTheID(String arg0) {
-        this.customer = new Customer(Integer.parseInt(arg0), "", "", "", 0);
+        this.customer = new Customer(Integer.parseInt(arg0), "", "",  0);
     }
 
     @And("my credit is {int}€")

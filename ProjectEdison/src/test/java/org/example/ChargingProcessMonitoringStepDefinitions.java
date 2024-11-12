@@ -1,71 +1,104 @@
 package org.example;
 
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class ChargingProcessMonitoringStepDefinitions {
 
-    private String customerName;
+
+    @ParameterType("[-+]?\\d*\\.?\\d+")
+    public double d(String value) {
+        return Double.parseDouble(value);
+    }
+    private ChargingProcess chargingProcess = new ChargingProcess();
+    private ChargingStation chargingStation =  new ChargingStation();
+    private Customer customer = new Customer();
+    private Charger charger = new Charger();
+    private Invoice invoice;
     private int credit;
+
     private int maxBatteryCapacity;
     private int currentCapacity;
 
     @Given("My Customer Name is {string}")
-    public void myCustomerNameIs(String arg0) {
-       this.customerName = arg0;
+    public void myCustomerNameIs(String name) {
+
+        customer.setName(name);
     }
 
-    @And("my credit is {int} €")
-    public void myCreditIs€(int arg0) {
-        this.credit = arg0;
+    @And("my credit is {double} €")
+    public void myCreditIs€(double amount) {
+        customer.topUpCredit(amount);
     }
 
     @And("my vehicle has a maximum Battery capacity of {int} kW")
-    public void myVehicleHasAMaximumBatteryCapacityOfKW(int arg0) {
-        this.maxBatteryCapacity = arg0;
+    public void myVehicleHasAMaximumBatteryCapacityOfKW(int maxKw) {
+        this.maxBatteryCapacity = maxKw;
     }
 
     @And("the current capacity is at {int} kW")
-    public void theCurrentCapacityIsAtKW(int arg0) {
-        this.currentCapacity = arg0;
+    public void theCurrentCapacityIsAtKW(int cuKW) {
+        this.currentCapacity = cuKW;
     }
 
     @And("I was at the charging Station {string}")
-    public void iWasAtTheChargingStation(String arg0) {
-        ChargingStation chargingStation = new ChargingStation(arg0, "", 0.0, 0.0);
+    public void iWasAtTheChargingStation(String CsName) {
+        chargingStation.setCsName(CsName);
+    }
+    @And("the station is located at the address {string}")
+    public void theStationIsLocatedAtTheAddress(String location) {
+        chargingStation.setLocation(location);
+    }
+    @And("the Price for AC at {string} is {double}€ per KwH")
+    public void thePriceForACAtIs€PerKwH(String location, double ACPrice) {
+        chargingStation.setPriceAC(ACPrice);
     }
 
-    @And("the station is located at the address {string}")
-    public void theStationIsLocatedAtTheAddress(String arg0) {
-        ChargingStation chargingStation = new ChargingStation("", arg0, 0.0, 0.0);
+    @And("the Price for DC at {string} is {double}€ per KwH")
+    public void thePriceForDCAtIs€PerKwH(String location, double DCPrice) {
+        chargingStation.setPriceDC(DCPrice);
     }
 
     @And("the Standing fee is {double}€ per minute")
-    public void theStandingFeeIs€PerMinute(double arg0) {
-        ChargingStation chargingStation = new ChargingStation("", "", 0.0, 0.0);
-        double standingFee = 0.50;
-        chargingStation.setStandingFee(standingFee);
+    public void theStandingFeeIs€PerMinute(double standingFee) {
+        assertEquals (chargingStation.getStandingFee(), standingFee);
     }
 
+
+
     @And("the charging process started at {string}")
-    public void theChargingProcessStartedAt(String arg0) {
-        ChargingStation chargingStation = new ChargingStation("", "", 0.0, 0.0);
-        chargingStation.settime(arg0);
+    public void theChargingProcessStartedAt(String startTime) {
+        LocalDateTime start = LocalDateTime.parse(startTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        chargingProcess.setStartTime(start);
+
     }
 
     @And("the charging process ended at {string}")
-    public void theChargingProcessEndedAt(String arg0) {
-        ChargingStation chargingStation = new ChargingStation("", "", 0.0, 0.0);
-        chargingStation.endtime(arg0);
+    public void theChargingProcessEndedAt(String endTime) {
+        LocalDateTime end = LocalDateTime.parse(endTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        charger.setChargingMethod(ChargingMethod.AC);
+        charger.setChargingStation(chargingStation);
+        chargingProcess.setCustomer(customer);
+        chargingProcess.setChargingStation(chargingStation);
+        chargingProcess.setCharger(charger);
+        chargingProcess.setEndTime(end);
+        chargingProcess.calculateTotalPrice();
+        invoice = new Invoice(chargingProcess.calculateTotalPrice(), chargingProcess);
     }
 
     @When("I view the invoice")
     public void iViewTheInvoice() {
+        invoice.printInvoice();
     }
 
-    @Then("I see that I charged {int}kW")
+    @Then("I see that I charged {d}kW")
     public void iSeeThatIChargedKW(int arg0) {
     }
 
@@ -77,17 +110,12 @@ public class ChargingProcessMonitoringStepDefinitions {
     public void iSeeTheTotalCostForEnergyConsumedIs€(String arg0) {
     }
 
-    @And("I see that no standing fee was applied")
-    public void iSeeThatNoStandingFeeWasApplied() {
-    }
+
 
     @And("I see that the amount I was charged is {string}€")
     public void iSeeThatTheAmountIWasChargedIs€(String arg0) {
     }
 
-    @And("the remaining credit is {string}€")
-    public void theRemainingCreditIs€(String arg0) {
-    }
 
     @And("I see the charging station name {string}")
     public void iSeeTheChargingStationName(String arg0) {
@@ -120,4 +148,7 @@ public class ChargingProcessMonitoringStepDefinitions {
     @And("I see that the Standing Fee I was charged is {string}€")
     public void iSeeThatTheStandingFeeIWasChargedIs€(String arg0) {
     }
+
+
+
 }
