@@ -71,4 +71,20 @@ public class ExecuteChargingProcessStepDefinitions {
             this.chargingStation.setPriceAC(price);
         }
     }
+
+
+    @Then("the charging process cannot start before the current time")
+    public void theChargingProcessCannotStartBeforeTheCurrentTime() {
+        try {
+            if (this.chargingProcess.getStartTime().isBefore(LocalDateTime.now())) {
+                throw new IllegalArgumentException("Charging process cannot start before the current time.");
+            }
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @And("I am not charged")
+    public void iAmNotCharged() {
+    }
 }

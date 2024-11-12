@@ -14,3 +14,13 @@ Background:
     And the charging process ends at "2024-10-01T11:40:00"
     Then the charging process took 100 minutes
     And I am charged 50 Euros
+
+    ##----------------------------------------------
+  #error case 1: charging process starts before the current time
+    Scenario: Charging process starts before the current time
+        When the charging process starts at "2024-10-01T09:00:00"
+        And the charging process ends at "2024-10-01T08:40:00"
+        Then the charging process cannot start before the current time
+        And I am not charged
+
+        ##----------------------------------------------
