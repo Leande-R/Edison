@@ -31,4 +31,8 @@ public class AssignChargerStatusStepdefinitions {
         assertEquals(ChargingStatus.OUT_OF_ORDER, charger.getChargingStatus());
 
     }
+
+
+
+
 }

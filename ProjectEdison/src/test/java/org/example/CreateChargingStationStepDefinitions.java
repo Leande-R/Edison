@@ -39,8 +39,10 @@ public class CreateChargingStationStepDefinitions {
         chargingStation.setPriceDC(priceDC);
     }
 
-    @Then("i have sucessfully created a new Charging Station in {string} with the name {string} and the AC-price  {double} and the DC-Price {double}")
-    public void iHaveSucessfullyCreatedANewChargingStationInFürstendfeld(String location, String name, double priceAC, double priceDC) {
+
+
+    @Then("i have successfully created a new Charging Station in {string} with the name {string} and the AC-price  {double} and the DC-Price {double}")
+    public void iHaveSuccessfullyCreatedANewChargingStationInWithTheNameAndTheACPriceAndTheDCPrice(String location, String name,  double priceAC, double priceDC) {
         assertEquals(location, chargingStation.getLocation());
         assertEquals(name, chargingStation.getCsName());
         assertEquals(priceAC, chargingStation.getPriceAC());

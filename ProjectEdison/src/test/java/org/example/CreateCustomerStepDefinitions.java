@@ -6,6 +6,8 @@ import io.cucumber.java.ParameterType;
 import io.cucumber.java.en.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class CreateCustomerStepDefinitions {
 
 
@@ -52,4 +54,6 @@ public class CreateCustomerStepDefinitions {
         assertEquals(ID, customer.getId());
         assertEquals(mail, customer.getMail());
     }
+
+
 }

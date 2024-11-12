@@ -1,6 +1,8 @@
 Feature: An example
 
+Background:
+  Given an example scenario
+
   Scenario: The example
-    Given an example scenario
     When all step definitions are implemented
     Then the scenario passes

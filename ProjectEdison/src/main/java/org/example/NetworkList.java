@@ -5,7 +5,7 @@ import java.util.List;
 
 public class NetworkList {
     private static NetworkList instance;
-    private List<ChargingStation> chargingStations;
+    private  List<ChargingStation> chargingStations;
 
     private NetworkList() {
         chargingStations = new LinkedList<>();
